@@ -12,9 +12,9 @@ A hardware-accelerated "Moiré Pattern" generator running on the Pynq-Z1 (Zynq-7
 
 ## Project Structure
 
-- `moire\_pattern\_gen.vhd`: Custom IP core handling the pattern generation and timing logic.
-- `pynq\_z1\_hdmi.xdc`: Physical constraints mapping HDMI signals to the board pins.
-- `design\_1.bd`: Block Design connecting the Zynq PS, VTC, and custom IP.
+- `moire_pattern_gen.vhd`: Custom IP core handling the pattern generation and timing logic.
+- `pynq_z1_hdmi.xdc`: Physical constraints mapping HDMI signals to the board pins.
+- `design_1.bd`: Block Design connecting the Zynq PS, VTC, and custom IP.
 
 ## Setup Instructions
 

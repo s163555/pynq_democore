@@ -1,0 +1,35 @@
+# Vivado Project output files
+*.jou
+*.log
+*.str
+*.dmp
+.Xil/
+.cache/
+.hw/
+
+# Simulation files
+*.sim/
+*.wdb
+*.wcfg
+
+# Implementation & Synthesis Runs (Massive folders, do not commit)
+# You regenerate these by clicking "Generate Bitstream"
+*.runs/
+
+# IP & Managed Code (Tricky area)
+# Generally, we want to keep the .xci (IP config) but ignore the generated output products
+# However, for Block Designs, we often need the wrapper.
+*.ip_user_files/
+*.gen/
+
+# Pynq/Software specific
+__pycache__/
+*.ipynb_checkpoints/
+
+# Bitstreams (Optional: Ignore them so you don't bloat the repo history)
+# If you want to save "Golden" bitstreams, put them in a dedicated 'releases' folder
+*.bit
+*.hwh
+
+# Local User Settings
+*.os

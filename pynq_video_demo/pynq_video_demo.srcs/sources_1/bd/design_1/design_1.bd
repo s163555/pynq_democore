@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x6C5BC8F7810AD137",
+      "boundary_crc": "0x6C5BC8F79C9ABED4",
       "device": "xc7z020clg400-1",
       "gen_directory": "../../../../pynq_video_demo.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -2029,19 +2029,19 @@
       "proc_sys_reset_0_peripheral_aresetn": {
         "ports": [
           "proc_sys_reset_0/peripheral_aresetn",
-          "moire_pattern_gen_0/aresetn",
-          "rgb2dvi_0/aRst_n"
+          "rgb2dvi_0/aRst_n",
+          "moire_pattern_gen_0/aresetn"
         ]
       },
       "processing_system7_0_FCLK_CLK1": {
         "ports": [
           "processing_system7_0/FCLK_CLK1",
-          "moire_pattern_gen_0/aclk",
           "v_tc_0/clk",
           "v_axi4s_vid_out_0/aclk",
           "v_axi4s_vid_out_0/vid_io_out_clk",
           "proc_sys_reset_0/slowest_sync_clk",
-          "rgb2dvi_0/PixelClk"
+          "rgb2dvi_0/PixelClk",
+          "moire_pattern_gen_0/aclk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {

@@ -34,6 +34,7 @@ ol = Overlay("pynq\_video\_demo.bit")
 
 ### A Critical "Pro Tip" for Vivado \& Git
 Vivado's project file (`.xpr`) and Block Design file (`.bd`) are XML-based but change drastically with every click. They are painful to merge if two people work on them.
+
 **The Golden Rule:**
 When you get your project working (successfully generating a bitstream), run this command in the Vivado Tcl Console:
 ```tcl

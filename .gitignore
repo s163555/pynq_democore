@@ -24,10 +24,12 @@
 __pycache__/
 *.ipynb_checkpoints/
 
-# Bitstreams (Optional: Ignore them so you don't bloat the repo history)
-# If you want to save "Golden" bitstreams, put them in a dedicated 'releases' folder
+# Bitstreams
 *.bit
 *.hwh
+# EXCEPT: released bitstreams
+!releases/*.bit
+!releases/*.hwh
 
 # Local User Settings
 *.os

@@ -20,12 +20,6 @@
 # You regenerate these by clicking "Generate Bitstream"
 *.runs/
 
-# IP & Managed Code (Tricky area)
-# Generally, we want to keep the .xci (IP config) but ignore the generated output products
-# However, for Block Designs, we often need the wrapper.
-**/*.ip_user_files/
-**/*.gen/
-
 # Pynq/Software specific
 __pycache__/
 *.ipynb_checkpoints/

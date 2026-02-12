@@ -10,37 +10,32 @@ entity moire_pattern_gen is
     Port (
         aclk    : in STD_LOGIC;
         aresetn : in STD_LOGIC;
-        
-        -- AXI4-Stream Interface
-        m_axis_video_tdata  : out STD_LOGIC_VECTOR(23 downto 0); -- RGB 8:8:8
+
+        m_axis_video_tdata  : out STD_LOGIC_VECTOR(23 downto 0); 
         m_axis_video_tvalid : out STD_LOGIC;
         m_axis_video_tready : in  STD_LOGIC;
         m_axis_video_tlast  : out STD_LOGIC;
-        m_axis_video_tuser  : out STD_LOGIC -- Start of Frame (SOF)
+        m_axis_video_tuser  : out STD_LOGIC 
+
     );
 end moire_pattern_gen;
 
 architecture Behavioral of moire_pattern_gen is
-    -- Counters for X and Y position
+
     signal h_count : unsigned(11 downto 0) := (others => '0');
     signal v_count : unsigned(11 downto 0) := (others => '0');
-    
-    -- Animation frame counter
+
     signal frame_count : unsigned(15 downto 0) := (others => '0');
-    
-    -- Internal Stream Signals
     signal axis_valid : std_logic := '0';
     signal axis_last  : std_logic := '0';
     signal axis_user  : std_logic := '0';
 
 begin
 
-    -- Continuous Assignments
     m_axis_video_tvalid <= axis_valid;
     m_axis_video_tlast  <= axis_last;
     m_axis_video_tuser  <= axis_user;
 
-    -- Main Process
     process(aclk)
     begin
         if rising_edge(aclk) then
@@ -52,37 +47,27 @@ begin
                 axis_last <= '0';
                 axis_user <= '0';
             else
-                -- We always attempt to drive valid data
                 axis_valid <= '1';
-                
-                -- Only advance counters if the downstream (HDMI) is ready
                 if m_axis_video_tready = '1' and axis_valid = '1' then
-                    
-                    -- Horizontal Counter Logic
                     if h_count = H_RES - 1 then
                         h_count <= (others => '0');
-                        axis_last <= '0'; -- Reset TLAST for next line
-                        
-                        -- Vertical Counter Logic
+                        axis_last <= '0'; 
                         if v_count = V_RES - 1 then
                             v_count <= (others => '0');
-                            axis_user <= '1'; -- TUSER high for first pixel of NEW frame
-                            frame_count <= frame_count + 1; -- Animation tick
+                            axis_user <= '1'; 
+                            frame_count <= frame_count + 1; 
                         else
                             v_count <= v_count + 1;
                             axis_user <= '0';
                         end if;
                     else
                         h_count <= h_count + 1;
-                        
-                        -- Generate TLAST at the end of the line
                         if h_count = H_RES - 2 then
                             axis_last <= '1';
                         else
                             axis_last <= '0';
                         end if;
-                        
-                        -- Turn off TUSER after the very first pixel of the frame
+
                         axis_user <= '0';
                     end if;
                 end if;
@@ -90,20 +75,12 @@ begin
         end if;
     end process;
 
-    -- THE PATTERN LOGIC (The "Art")
-    -- We use combinational logic to generate colors based on positions and time
     process(h_count, v_count, frame_count)
         variable r, g, b : unsigned(7 downto 0);
     begin
-        -- Create a "moving" X and Y by adding the frame counter
-        -- XORing X and Y creates the Sierpinski-like fractal
         g := (h_count(7 downto 0) + frame_count(7 downto 0)) XOR v_count(7 downto 0);
-        
-        -- Simple gradients for Red and Blue
         r := h_count(8 downto 1); 
         b := v_count(8 downto 1) + frame_count(7 downto 0);
-        
-        -- Concatenate into 24-bit RGB
         m_axis_video_tdata <= std_logic_vector(b) & std_logic_vector(g) & std_logic_vector(r);
     end process;
 
